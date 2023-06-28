@@ -1,0 +1,70 @@
+[System]
+Name='Testing'
+Type='mamdani'
+Version=2.0
+NumInputs=2
+NumOutputs=2
+NumRules=16
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='EC_offset'
+Range=[-0.5 0.5]
+NumMFs=4
+MF1='L':'trapmf',[-0.6 -0.5 -0.4 -0.2]
+MF2='M':'trapmf',[-0.4 -0.2 -0.2 0]
+MF3='H':'trapmf',[0 0.4 0.5 0.6]
+MF4='E':'trapmf',[-0.2 0 0 0.4]
+
+[Input2]
+Name='water_level_offset'
+Range=[0 24]
+NumMFs=4
+MF1='L':'trapmf',[-2 0 10.9 14.4]
+MF2='M':'trapmf',[10.9 14.4 14.4 20]
+MF3='E':'trapmf',[14.4 20 20 23.6]
+MF4='H':'trapmf',[20 22 24 26]
+
+[Output1]
+Name='pompaAB'
+Range=[-0.835 12.52]
+NumMFs=8
+MF1='VVS':'trapmf',[0.8344 1.669 1.669 2.504]
+MF2='S':'trapmf',[4.173 5.008 5.008 5.843]
+MF3='Z':'trapmf',[-0.835 -0.0003125 -0.0003125 0.8344]
+MF4='VS':'trapmf',[2.504 3.338 3.338 4.173]
+MF5='M':'trapmf',[5.843 6.677 6.677 7.512]
+MF6='LG':'trapmf',[7.512 8.347 8.347 9.181]
+MF7='VLG':'trapmf',[9.181 10.02 10.02 10.85]
+MF8='VVLG':'trapmf',[10.85 11.69 11.69 12.52]
+
+[Output2]
+Name='water_pump'
+Range=[-23 172.5]
+NumMFs=4
+MF1='S':'trapmf',[25.88 50.32 50.32 74.75]
+MF2='Z':'trapmf',[-23 1.438 1.438 25.88]
+MF3='M':'trapmf',[74.75 99.19 99.19 123.7]
+MF4='LG':'trapmf',[123.7 148 148 172.5]
+
+[Rules]
+1 1, 8 4 (1) : 1
+1 2, 7 3 (1) : 1
+1 3, 5 2 (1) : 1
+1 4, 5 2 (1) : 1
+2 1, 7 4 (1) : 1
+2 2, 6 3 (1) : 1
+2 3, 4 2 (1) : 1
+2 4, 4 2 (1) : 1
+4 1, 6 4 (1) : 1
+4 2, 1 3 (1) : 1
+4 3, 3 2 (1) : 1
+4 4, 3 2 (1) : 1
+3 1, 5 4 (1) : 1
+3 2, 3 3 (1) : 1
+3 3, 3 1 (1) : 1
+3 4, 3 2 (1) : 1

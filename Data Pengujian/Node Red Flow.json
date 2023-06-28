@@ -1,0 +1,3105 @@
+[
+    {
+        "id": "b086de2ebf79f95d",
+        "type": "tab",
+        "label": "dashboard_skripsi",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "504f7172601f624c",
+        "type": "group",
+        "z": "b086de2ebf79f95d",
+        "name": "Main Menu",
+        "style": {
+            "stroke": "#0070c0",
+            "label": true
+        },
+        "nodes": [
+            "5a4f090402b343e6",
+            "7fb3c28d8f8e689b",
+            "3f70b537fbe11f28",
+            "1345e09926613d8f",
+            "b1fbaa59de331fc9",
+            "4da946bd4e0b10eb",
+            "91868ed49abc6282",
+            "ebf515c6222c16f3"
+        ],
+        "x": 14,
+        "y": 99,
+        "w": 1032,
+        "h": 242
+    },
+    {
+        "id": "2462161168b3a7c8",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "ph",
+        "func": "const data = msg.payload;\nmsg.payload = data.ph;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 560,
+        "wires": [
+            [
+                "d5a7b588ed33a0ad",
+                "dc5ea8952f4c9bc1"
+            ]
+        ]
+    },
+    {
+        "id": "7839120c37651a8d",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "temp",
+        "func": "const data = msg.payload;\nmsg.payload = data.water_temp;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 480,
+        "wires": [
+            [
+                "7bb8eb872678b0b6",
+                "437062185636a428"
+            ]
+        ]
+    },
+    {
+        "id": "e2945357462a54a1",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "ec",
+        "func": "const data = msg.payload;\nmsg.payload = data.ec;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 640,
+        "wires": [
+            [
+                "ae7a16534dfc87c8",
+                "fce4068f548f682f"
+            ]
+        ]
+    },
+    {
+        "id": "fd2955728b254458",
+        "type": "mqtt in",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "topic": "skripsi/iot_greenhouse/scn/json",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "4e3c698d6efaab10",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 520,
+        "wires": [
+            [
+                "2462161168b3a7c8",
+                "7839120c37651a8d",
+                "e2945357462a54a1",
+                "332518b63e1039eb",
+                "303cb265bcc82427"
+            ]
+        ]
+    },
+    {
+        "id": "e9aa32952a56190d",
+        "type": "http request",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "localhost:5000/api/csv/{{msg.payload}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "",
+                "valueType": "other",
+                "valueValue": ""
+            }
+        ],
+        "x": 1410,
+        "y": 240,
+        "wires": [
+            [
+                "fb94a1a9ac482346"
+            ]
+        ]
+    },
+    {
+        "id": "d69f955a47b6e0c9",
+        "type": "debug",
+        "z": "b086de2ebf79f95d",
+        "name": "debug 20",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 120,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "8115390e54050251",
+        "type": "ui_button",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "group": "8293a78a191dd3d7",
+        "order": 5,
+        "width": 8,
+        "height": 1,
+        "passthru": false,
+        "label": "Edit Parameter",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-pencil-square-o",
+        "payload": "{\"group\":{\"hide\":[\"Greenhouse_Display_Param\"],\"show\":[\"Greenhouse_Edit_Param\"]}}",
+        "payloadType": "json",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 760,
+        "y": 540,
+        "wires": [
+            [
+                "0f7c0833fb55509e",
+                "42b3fbd27ef6c4cd"
+            ]
+        ]
+    },
+    {
+        "id": "42b3fbd27ef6c4cd",
+        "type": "http request",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://dashboard.greenhouse-project.my.id/api/PlantParam",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 950,
+        "y": 480,
+        "wires": [
+            [
+                "930721d004b60781"
+            ]
+        ]
+    },
+    {
+        "id": "19601cbeb7dc90ec",
+        "type": "ui_button",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "group": "dd116dcad9e28d42",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Back",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "dsa",
+        "payload": "{\"group\":{\"hide\":[\"Greenhouse_Edit_Param\"],\"show\":[\"Greenhouse_Display_Param\"]}}",
+        "payloadType": "json",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 730,
+        "y": 600,
+        "wires": [
+            [
+                "231fb1c5a912be28"
+            ]
+        ]
+    },
+    {
+        "id": "b95818d0d1e17ae3",
+        "type": "ui_button",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "group": "dd116dcad9e28d42",
+        "order": 3,
+        "width": 8,
+        "height": 1,
+        "passthru": false,
+        "label": "Save Parameter",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "mi-videogame_asset",
+        "payload": "save",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 1140,
+        "y": 600,
+        "wires": [
+            [
+                "cecb49c8c6fa6539"
+            ]
+        ]
+    },
+    {
+        "id": "0f7c0833fb55509e",
+        "type": "ui_ui_control",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "events": "all",
+        "x": 940,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "231fb1c5a912be28",
+        "type": "ui_ui_control",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "events": "all",
+        "x": 920,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "930721d004b60781",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 5",
+        "func": "let arr = msg.payload\nlet arrJs = [];\n\n\nfor (let i = 0; i < arr.length; i++) {\n    let tempJs = {};\n    tempJs[arr[i].name] = arr[i];\n    arrJs[i] = tempJs;\n}\n\nmsg.payload = 1;\nmsg.options = arrJs;\n\nreturn msg\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1140,
+        "y": 480,
+        "wires": [
+            [
+                "02859607ede3e126",
+                "59756d6c8d6a25ac"
+            ]
+        ]
+    },
+    {
+        "id": "59756d6c8d6a25ac",
+        "type": "debug",
+        "z": "b086de2ebf79f95d",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1320,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "02859607ede3e126",
+        "type": "ui_dropdown",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "label": "Jenis Tanaman",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "dd116dcad9e28d42",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "",
+                "value": "",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 1140,
+        "y": 560,
+        "wires": [
+            [
+                "11e7635270f0e5a4",
+                "d60f360482dcb4f2"
+            ]
+        ]
+    },
+    {
+        "id": "1ebc65e35be30beb",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 6",
+        "func": "context.data = context.data || {};\n\nswitch (msg.topic) {\n    case \"task1\":\n        context.data.task1 = msg.payload;\n        msg = null;\n        break\n    case \"task2\":\n        context.data.task2 = msg.payload;\n        msg = null;\n        break\n    default:\n        msg = null;\n        break\n}\n\nif (context.data.task1 != null && context.data.task2 == \"save\") {\n    var ratio = context.data.task1;\n    context.data = null;\n    return { payload: ratio }\n} else return msg\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1580,
+        "y": 560,
+        "wires": [
+            [
+                "1bfb6dd9bc74b4e7",
+                "7b38d808374d4834",
+                "047bc2f701ccb1ea",
+                "78fb4aae30f82901"
+            ]
+        ]
+    },
+    {
+        "id": "2575bc715530a4cf",
+        "type": "ui_list",
+        "z": "b086de2ebf79f95d",
+        "group": "dd116dcad9e28d42",
+        "name": "",
+        "order": 2,
+        "width": 8,
+        "height": 6,
+        "lineType": "two",
+        "actionType": "none",
+        "allowHTML": false,
+        "outputs": 0,
+        "topic": "",
+        "x": 1570,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "d60f360482dcb4f2",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 7",
+        "func": "let arr =  msg.payload;\nlet listVal = [{}];\nconst key = Object.keys(arr);\n\n\nfor (let i = 1; i < key.length; i++) {\n    listVal[i-1] = { \"title\": key[i], \"description\" : arr[key[i]]};\n}\n\nmsg.payload = listVal;\n\nreturn msg\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1380,
+        "y": 680,
+        "wires": [
+            [
+                "109eba78c02846fe",
+                "2575bc715530a4cf"
+            ]
+        ]
+    },
+    {
+        "id": "cecb49c8c6fa6539",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 8",
+        "func": "var arr = msg.payload;\n\nmsg.payload = arr;\nmsg.topic = \"task2\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1380,
+        "y": 600,
+        "wires": [
+            [
+                "1ebc65e35be30beb"
+            ]
+        ]
+    },
+    {
+        "id": "109eba78c02846fe",
+        "type": "debug",
+        "z": "b086de2ebf79f95d",
+        "name": "debug 12",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1620,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "11e7635270f0e5a4",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 9",
+        "func": "var arr = msg.payload;\n\nmsg.payload = arr;\nmsg.topic = \"task1\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1380,
+        "y": 560,
+        "wires": [
+            [
+                "219693c4e5cfa8be",
+                "1ebc65e35be30beb"
+            ]
+        ]
+    },
+    {
+        "id": "b79d05d92c7b2747",
+        "type": "ui_toast",
+        "z": "b086de2ebf79f95d",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 1970,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "c770d466fe5acb4f",
+        "type": "ui_list",
+        "z": "b086de2ebf79f95d",
+        "group": "8293a78a191dd3d7",
+        "name": "",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "lineType": "two",
+        "actionType": "none",
+        "allowHTML": false,
+        "outputs": 0,
+        "topic": "",
+        "x": 1930,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "219693c4e5cfa8be",
+        "type": "debug",
+        "z": "b086de2ebf79f95d",
+        "name": "debug 13",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1560,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "78fb4aae30f82901",
+        "type": "debug",
+        "z": "b086de2ebf79f95d",
+        "name": "debug 14",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1760,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "047bc2f701ccb1ea",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 10",
+        "func": "let arr =  msg.payload;\nlet listVal = [{}];\nconst key = Object.keys(arr);\n\n\nfor (let i = 1; i < key.length; i++) {\n    listVal[i-1] = { \"title\": key[i], \"description\" : arr[key[i]]};\n}\n\nmsg.payload = listVal;\n\nreturn msg\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1770,
+        "y": 520,
+        "wires": [
+            [
+                "c770d466fe5acb4f"
+            ]
+        ]
+    },
+    {
+        "id": "7b38d808374d4834",
+        "type": "mqtt out",
+        "z": "b086de2ebf79f95d",
+        "name": "send params ",
+        "topic": "skripsi/iot_greenhouse/params",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "4e3c698d6efaab10",
+        "x": 1770,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "1bfb6dd9bc74b4e7",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 21",
+        "func": "const name = msg.payload.name;\nmsg.payload = \"param set to \" + name;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1770,
+        "y": 480,
+        "wires": [
+            [
+                "b79d05d92c7b2747"
+            ]
+        ]
+    },
+    {
+        "id": "9ccdbdb7a8722251",
+        "type": "ui_button",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "group": "9e7976ed51696c01",
+        "order": 12,
+        "width": 25,
+        "height": 1,
+        "passthru": false,
+        "label": "Back to main menu",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-arrow-left",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "Main",
+        "topicType": "str",
+        "x": 690,
+        "y": 880,
+        "wires": [
+            [
+                "f5cef6cfebacc237"
+            ]
+        ]
+    },
+    {
+        "id": "f5cef6cfebacc237",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 26",
+        "func": "msg.payload = msg.topic;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 880,
+        "wires": [
+            [
+                "01717681dab7deaa"
+            ]
+        ]
+    },
+    {
+        "id": "01717681dab7deaa",
+        "type": "ui_ui_control",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "events": "all",
+        "x": 1060,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "962000ccf1e22eca",
+        "type": "ui_text",
+        "z": "b086de2ebf79f95d",
+        "group": "9e7976ed51696c01",
+        "order": 7,
+        "width": 5,
+        "height": 1,
+        "name": "",
+        "label": "Son Temp",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 660,
+        "y": 3180,
+        "wires": []
+    },
+    {
+        "id": "255b94cbe980ef4f",
+        "type": "ui_chart",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "group": "9e7976ed51696c01",
+        "order": 2,
+        "width": 5,
+        "height": 4,
+        "label": "Son Temp",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 660,
+        "y": 3140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5a4f090402b343e6",
+        "type": "ui_ui_control",
+        "z": "b086de2ebf79f95d",
+        "g": "504f7172601f624c",
+        "name": "",
+        "events": "all",
+        "x": 960,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7fb3c28d8f8e689b",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "g": "504f7172601f624c",
+        "name": "function 23",
+        "func": "msg.payload = {\n    \"group\": {\n        \"hide\": [\n            \"Greenhouse_Main\",\n            \"Greenhouse_Edit_Param\"\n        ],\n            \"show\": [\n                \"Greenhouse_Greenhouse_A\",\n                \"Greenhouse_Display_Param\"\n            ]\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 200,
+        "wires": [
+            [
+                "5a4f090402b343e6"
+            ]
+        ]
+    },
+    {
+        "id": "3f70b537fbe11f28",
+        "type": "ui_button",
+        "z": "b086de2ebf79f95d",
+        "g": "504f7172601f624c",
+        "name": "",
+        "group": "7a2f2e41cd4506d7",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Greenhouse",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "Greenhouse",
+        "topicType": "str",
+        "x": 110,
+        "y": 140,
+        "wires": [
+            [
+                "4da946bd4e0b10eb"
+            ]
+        ]
+    },
+    {
+        "id": "1345e09926613d8f",
+        "type": "ui_ui_control",
+        "z": "b086de2ebf79f95d",
+        "g": "504f7172601f624c",
+        "name": "",
+        "events": "all",
+        "x": 560,
+        "y": 200,
+        "wires": [
+            [
+                "7fb3c28d8f8e689b"
+            ]
+        ]
+    },
+    {
+        "id": "b1fbaa59de331fc9",
+        "type": "ui_button",
+        "z": "b086de2ebf79f95d",
+        "g": "504f7172601f624c",
+        "name": "",
+        "group": "7a2f2e41cd4506d7",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Lora",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "Lora",
+        "topicType": "str",
+        "x": 130,
+        "y": 260,
+        "wires": [
+            [
+                "4da946bd4e0b10eb"
+            ]
+        ]
+    },
+    {
+        "id": "4da946bd4e0b10eb",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "g": "504f7172601f624c",
+        "name": "function 22",
+        "func": "msg.payload = msg.topic;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 200,
+        "wires": [
+            [
+                "1345e09926613d8f"
+            ]
+        ]
+    },
+    {
+        "id": "fb94a1a9ac482346",
+        "type": "csv",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 1590,
+        "y": 240,
+        "wires": [
+            [
+                "70fd204aa92cdd41"
+            ]
+        ]
+    },
+    {
+        "id": "70fd204aa92cdd41",
+        "type": "file",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "filename": "data.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1760,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "20d6948754f8a288",
+        "type": "ui_template",
+        "z": "b086de2ebf79f95d",
+        "group": "",
+        "name": "",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "format": "<a href=\"http://localhost:5000/api/csv\" download=\"data.csv\">Download</a>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1240,
+        "y": 240,
+        "wires": [
+            [
+                "e9aa32952a56190d"
+            ]
+        ]
+    },
+    {
+        "id": "5a318b943d99e2f9",
+        "type": "ui_numeric",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "label": "Hari Ke:",
+        "tooltip": "",
+        "group": "",
+        "order": 10,
+        "width": 0,
+        "height": 0,
+        "wrap": false,
+        "passthru": true,
+        "topic": "topic",
+        "topicType": "msg",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "className": "",
+        "x": 1140,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ea116299868d624a",
+        "type": "ui_chart",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "group": "9e7976ed51696c01",
+        "order": 3,
+        "width": 5,
+        "height": 4,
+        "label": "Son Humi",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 660,
+        "y": 3060,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "640e47750529b8d4",
+        "type": "ui_text",
+        "z": "b086de2ebf79f95d",
+        "group": "9e7976ed51696c01",
+        "order": 8,
+        "width": 5,
+        "height": 1,
+        "name": "",
+        "label": "Son Humi",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 660,
+        "y": 3100,
+        "wires": []
+    },
+    {
+        "id": "9ec70c0c94ee65fc",
+        "type": "ui_chart",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "group": "9e7976ed51696c01",
+        "order": 4,
+        "width": 5,
+        "height": 4,
+        "label": "Son Soil",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 660,
+        "y": 2980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cf2783b73cb8dc1a",
+        "type": "ui_text",
+        "z": "b086de2ebf79f95d",
+        "group": "9e7976ed51696c01",
+        "order": 9,
+        "width": 5,
+        "height": 1,
+        "name": "",
+        "label": "Son Soil",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 660,
+        "y": 3020,
+        "wires": []
+    },
+    {
+        "id": "fa11b81874c11e06",
+        "type": "ui_chart",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "group": "9e7976ed51696c01",
+        "order": 5,
+        "width": 5,
+        "height": 4,
+        "label": "Son Count",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 670,
+        "y": 3220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4882bf42670d7e84",
+        "type": "ui_text",
+        "z": "b086de2ebf79f95d",
+        "group": "9e7976ed51696c01",
+        "order": 10,
+        "width": 5,
+        "height": 1,
+        "name": "",
+        "label": "Son Count",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 670,
+        "y": 3260,
+        "wires": []
+    },
+    {
+        "id": "7564f0f4aa6cb2a4",
+        "type": "ui_chart",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "group": "9e7976ed51696c01",
+        "order": 6,
+        "width": 5,
+        "height": 4,
+        "label": "Son Time",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 660,
+        "y": 3300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f671ad977619a509",
+        "type": "ui_text",
+        "z": "b086de2ebf79f95d",
+        "group": "9e7976ed51696c01",
+        "order": 11,
+        "width": 5,
+        "height": 1,
+        "name": "",
+        "label": "Son Time",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 660,
+        "y": 3340,
+        "wires": []
+    },
+    {
+        "id": "5eb2d93d1e0ec6df",
+        "type": "mqtt in",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "topic": "skripsi/iot_greenhouse/son/json",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "4e3c698d6efaab10",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 3160,
+        "wires": [
+            [
+                "29c688ceab3d81df",
+                "5f35d33955c5bfd9",
+                "27e1e6b4f0085e89",
+                "8925c926160264e7",
+                "34cc8127f1062a5b",
+                "81d6b191cfe6f82d"
+            ]
+        ]
+    },
+    {
+        "id": "91868ed49abc6282",
+        "type": "ui_button",
+        "z": "b086de2ebf79f95d",
+        "g": "504f7172601f624c",
+        "name": "",
+        "group": "7a2f2e41cd4506d7",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Setup Tanam",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "Setup Tanam",
+        "topicType": "str",
+        "x": 110,
+        "y": 200,
+        "wires": [
+            [
+                "4da946bd4e0b10eb"
+            ]
+        ]
+    },
+    {
+        "id": "14c316b7d7bb8a26",
+        "type": "http request",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "localhost:5000/api/csv/{{msg.payload}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "",
+                "valueType": "other",
+                "valueValue": ""
+            }
+        ],
+        "x": 270,
+        "y": 3500,
+        "wires": [
+            [
+                "644df82123867a4f"
+            ]
+        ]
+    },
+    {
+        "id": "644df82123867a4f",
+        "type": "csv",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 450,
+        "y": 3500,
+        "wires": [
+            [
+                "79c2b685b7158b4b"
+            ]
+        ]
+    },
+    {
+        "id": "79c2b685b7158b4b",
+        "type": "file",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "filename": "data.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 620,
+        "y": 3500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c769395caf7dfbf5",
+        "type": "ui_template",
+        "z": "b086de2ebf79f95d",
+        "group": "9e7976ed51696c01",
+        "name": "",
+        "order": 11,
+        "width": 0,
+        "height": 0,
+        "format": "<a href=\"https://dashboard.greenhouse-project.my.id/api/lora\" download=\"data.csv\">Download All Data Lora</a>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 100,
+        "y": 3500,
+        "wires": [
+            [
+                "14c316b7d7bb8a26"
+            ]
+        ]
+    },
+    {
+        "id": "057651dbb6042c26",
+        "type": "ui_date_picker",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "label": "Tanggal Tanam",
+        "group": "a8fc93cddd5f661b",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "tanam",
+        "topicType": "str",
+        "className": "",
+        "x": 300,
+        "y": 1260,
+        "wires": [
+            [
+                "196a820a827491a3"
+            ]
+        ]
+    },
+    {
+        "id": "d23275a51261616e",
+        "type": "ui_date_picker",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "label": "Tanggal Semai",
+        "group": "a8fc93cddd5f661b",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "semai",
+        "topicType": "str",
+        "className": "",
+        "x": 300,
+        "y": 1220,
+        "wires": [
+            [
+                "196a820a827491a3"
+            ]
+        ]
+    },
+    {
+        "id": "196a820a827491a3",
+        "type": "join",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 530,
+        "y": 1180,
+        "wires": [
+            [
+                "6dbe5856c3d7f1aa",
+                "c794dd76a76d5f54"
+            ]
+        ]
+    },
+    {
+        "id": "5f523895cdd00c36",
+        "type": "inject",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1220,
+        "wires": [
+            [
+                "d23275a51261616e"
+            ]
+        ]
+    },
+    {
+        "id": "65f3d6b4e0ff7ae0",
+        "type": "inject",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1260,
+        "wires": [
+            [
+                "057651dbb6042c26"
+            ]
+        ]
+    },
+    {
+        "id": "6dbe5856c3d7f1aa",
+        "type": "debug",
+        "z": "b086de2ebf79f95d",
+        "name": "debug 23",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "83cbf32ccb570d49",
+        "type": "http request",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://dashboard.greenhouse-project.my.id/api/dataTanam",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1030,
+        "y": 1300,
+        "wires": [
+            [
+                "7f2250ef8d14d2a6",
+                "6fb989ce5dc8555a",
+                "b449758de24c81ae"
+            ]
+        ]
+    },
+    {
+        "id": "7f2250ef8d14d2a6",
+        "type": "debug",
+        "z": "b086de2ebf79f95d",
+        "name": "debug 24",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1300,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "b449758de24c81ae",
+        "type": "ui_button",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "group": "1404f2eef868bd1c",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "label": "SHOW DATA",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 610,
+        "y": 1560,
+        "wires": [
+            [
+                "757ee3cc2d6baf88"
+            ]
+        ]
+    },
+    {
+        "id": "757ee3cc2d6baf88",
+        "type": "http request",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://dashboard.greenhouse-project.my.id/api/dataTanam/0",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 290,
+        "y": 1680,
+        "wires": [
+            [
+                "d32c8c71c0e27971",
+                "2f9bb3c224f0a387",
+                "917e37d19fa3dd8e"
+            ]
+        ]
+    },
+    {
+        "id": "09bb3b153b1652e6",
+        "type": "ui_list",
+        "z": "b086de2ebf79f95d",
+        "group": "1404f2eef868bd1c",
+        "name": "",
+        "order": 1,
+        "width": 8,
+        "height": 7,
+        "lineType": "two",
+        "actionType": "none",
+        "allowHTML": false,
+        "outputs": 0,
+        "topic": "",
+        "x": 810,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "da5c60707f805258",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 29",
+        "func": "let arr =  msg.payload;\nlet listVal = [{}];\nconst key = Object.keys(arr);\n\n\nfor (let i = 0; i < key.length; i++) {\n    listVal[i] = { \"title\": key[i], \"description\" : arr[key[i]]};\n}\n\nmsg.payload = listVal;\n\nreturn msg\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 1640,
+        "wires": [
+            [
+                "09bb3b153b1652e6"
+            ]
+        ]
+    },
+    {
+        "id": "d32c8c71c0e27971",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 30",
+        "func": "var data = msg.payload[0];\n\nfunction convertUTCDateToLocalDate(dateIn) {\n    const date = new Date(dateIn);\n\n    date.setHours(date.getHours() + 7);\n    date.setDate(date.getDate() + 0);\n\n\n    // now you can get the string\n    var isodate = date.toISOString();\n    return isodate;\n}\n\ndata.tanggal_semai = convertUTCDateToLocalDate(data.tanggal_semai);\ndata.tanggal_tanam = convertUTCDateToLocalDate(data.tanggal_tanam);\n\nif(data == null){\n    msg.payload = {\n        id: \"-\"\n    }\n}\nelse{\n    if (data.status == 0) {\n            msg.payload = {\n                id: data.id,\n                tanggal_semai: (new Date(data.tanggal_semai)).toISOString().substring(0, 10),\n                tanggal_tanam: (new Date(data.tanggal_tanam)).toISOString().substring(0, 10),\n                tanggal_panen: \"-\",\n                status: \"on going\"\n            }\n        } else {\n            msg.payload = data\n        }\n}\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 1640,
+        "wires": [
+            [
+                "da5c60707f805258"
+            ]
+        ]
+    },
+    {
+        "id": "487b3abb8b86fc74",
+        "type": "ui_button",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "group": "a8fc93cddd5f661b",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "{{topic}}",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "{{background}}",
+        "className": "",
+        "icon": "{{myicon}}",
+        "payload": "open",
+        "payloadType": "str",
+        "topic": "control",
+        "topicType": "str",
+        "x": 70,
+        "y": 1320,
+        "wires": [
+            [
+                "63ba18afc048480a"
+            ]
+        ]
+    },
+    {
+        "id": "63ba18afc048480a",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "button logic",
+        "func": "let payload=msg.payload;\nlet state=global.get(\"statusTanam\");\n// if(msg.topic==\"init\")\n// {\n//     state = \"open\";\n//     msg.payload = \"close\";\n//     msg.background = \"red\";\n//     msg.label = \"Press to Start\";\n//     msg.myicon = \"fa-toggle-off\";\n//     msg.topic=\"control\";\n//     return msg;\n// }\n//toggle\nif (typeof state == \"undefined\" || state==1)\n{\nstate=0;\nmsg.payload= \"close\";\nmsg.background = \"green\";\nmsg.label = \"START\";\nmsg.topic = \"status\";\nmsg.myicon = \"fa-play\";\n}\nelse{\nstate = 1;\nmsg.payload= \"open\";\nmsg.background = \"red\";\nmsg.label = \"END\";\nmsg.topic = \"status\";\nmsg.myicon=\"fa-stop\";\n}\nglobal.set(\"statusTanam\",state);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 230,
+        "y": 1320,
+        "wires": [
+            [
+                "eb014b8c2ebb5cc8",
+                "e9436d2a85471603",
+                "11ee86b33dfc7f86"
+            ]
+        ]
+    },
+    {
+        "id": "eb014b8c2ebb5cc8",
+        "type": "gate",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "controlTopic": "control",
+        "defaultState": "closed",
+        "openCmd": "open",
+        "closeCmd": "close",
+        "toggleCmd": "toggle",
+        "defaultCmd": "default",
+        "statusCmd": "status",
+        "persist": false,
+        "storeName": "memoryOnly",
+        "x": 410,
+        "y": 1400,
+        "wires": [
+            [
+                "e9436d2a85471603"
+            ]
+        ]
+    },
+    {
+        "id": "e9436d2a85471603",
+        "type": "debug",
+        "z": "b086de2ebf79f95d",
+        "name": "debug 60",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 400,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "11ee86b33dfc7f86",
+        "type": "change",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "label",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 130,
+        "y": 1420,
+        "wires": [
+            [
+                "487b3abb8b86fc74",
+                "23f490505d89f5ec",
+                "2f550a0b678c8821"
+            ]
+        ]
+    },
+    {
+        "id": "23f490505d89f5ec",
+        "type": "switch",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "open",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "close",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 490,
+        "y": 1300,
+        "wires": [
+            [
+                "196a820a827491a3"
+            ],
+            [
+                "0f7ea0ba84b76d90"
+            ]
+        ]
+    },
+    {
+        "id": "2b175ab6b4f59e56",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "SET GLOBAL VARIABLE",
+        "func": "global.set(\"idDataTanam\", msg.payload.id);\nglobal.set(\"statusTanam\", msg.payload.status);",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 1680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2f550a0b678c8821",
+        "type": "debug",
+        "z": "b086de2ebf79f95d",
+        "name": "debug 61",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 180,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "0f7ea0ba84b76d90",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 31",
+        "func": "const status = global.get(\"idDataTanam\");\nmsg.payload = status;\nmsg.topic = \"Akhiri Penanaman\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 1360,
+        "wires": [
+            [
+                "8f48cbb31f581a94"
+            ]
+        ]
+    },
+    {
+        "id": "b1150195e0a955e3",
+        "type": "http request",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://dashboard.greenhouse-project.my.id/api/dataTanamUpdate/{{{payload}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1190,
+        "y": 1400,
+        "wires": [
+            [
+                "b4d2a61e74e78854",
+                "ca2c3140a0036771"
+            ]
+        ]
+    },
+    {
+        "id": "b4d2a61e74e78854",
+        "type": "debug",
+        "z": "b086de2ebf79f95d",
+        "name": "debug 62",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1380,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "2f9bb3c224f0a387",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 32",
+        "func": "var data = msg.payload[0];\n\nmsg.payload = data\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 1680,
+        "wires": [
+            [
+                "2b175ab6b4f59e56"
+            ]
+        ]
+    },
+    {
+        "id": "6fb989ce5dc8555a",
+        "type": "ui_toast",
+        "z": "b086de2ebf79f95d",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 1280,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "8f48cbb31f581a94",
+        "type": "ui_toast",
+        "z": "b086de2ebf79f95d",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "Yes",
+        "cancel": "Cancel",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "Akhiri Penanaman",
+        "x": 830,
+        "y": 1360,
+        "wires": [
+            [
+                "fe084212656ebe99",
+                "8fe561145bb97341"
+            ]
+        ]
+    },
+    {
+        "id": "fe084212656ebe99",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 33",
+        "func": "const data = msg.payload;\n\nif(data == \"Yes\"){\n    const status = global.get(\"idDataTanam\");\n    msg.payload = status;\n    return msg\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1010,
+        "y": 1440,
+        "wires": [
+            [
+                "0fd0e789312b650a",
+                "b1150195e0a955e3"
+            ]
+        ]
+    },
+    {
+        "id": "29c688ceab3d81df",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "son_soil",
+        "func": "const data = msg.payload;\nmsg.payload = data.son_soil;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 3000,
+        "wires": [
+            [
+                "cf2783b73cb8dc1a",
+                "9ec70c0c94ee65fc"
+            ]
+        ]
+    },
+    {
+        "id": "5f35d33955c5bfd9",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "son_humi",
+        "func": "const data = msg.payload;\nmsg.payload = data.son_humi;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 3080,
+        "wires": [
+            [
+                "ea116299868d624a",
+                "640e47750529b8d4"
+            ]
+        ]
+    },
+    {
+        "id": "27e1e6b4f0085e89",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "son_temp",
+        "func": "const data = msg.payload;\nmsg.payload = data.son_temp;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 3160,
+        "wires": [
+            [
+                "255b94cbe980ef4f",
+                "962000ccf1e22eca"
+            ]
+        ]
+    },
+    {
+        "id": "8925c926160264e7",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "son_count",
+        "func": "const data = msg.payload;\nmsg.payload = data.son_count;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 3240,
+        "wires": [
+            [
+                "fa11b81874c11e06",
+                "4882bf42670d7e84"
+            ]
+        ]
+    },
+    {
+        "id": "34cc8127f1062a5b",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "son_time",
+        "func": "const data = msg.payload;\nmsg.payload = data.son_time;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 3320,
+        "wires": [
+            [
+                "7564f0f4aa6cb2a4",
+                "f671ad977619a509"
+            ]
+        ]
+    },
+    {
+        "id": "ca2c3140a0036771",
+        "type": "ui_toast",
+        "z": "b086de2ebf79f95d",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 1300,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "8fe561145bb97341",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 34",
+        "func": "let payload = msg.payload;\nlet state = global.get(\"statusTanam\");\n\nif(payload == \"Cancel\") {\n    state = 1;\n    msg.payload = \"open\";\n    msg.background = \"red\";\n    msg.label = \"END\";\n    msg.topic = \"status\";\n    msg.myicon = \"fa-stop\";\n}\nglobal.set(\"statusTanam\", state);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 1520,
+        "wires": [
+            [
+                "11ee86b33dfc7f86"
+            ]
+        ]
+    },
+    {
+        "id": "ce0ed9a81f35c831",
+        "type": "ui_toast",
+        "z": "b086de2ebf79f95d",
+        "position": "top right",
+        "displayTime": "6",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 650,
+        "y": 1720,
+        "wires": []
+    },
+    {
+        "id": "917e37d19fa3dd8e",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 35",
+        "func": "const data = msg.payload[0];\nif(data == null){\n    msg.payload = \"Tidak Ada Data Penanaman\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 1720,
+        "wires": [
+            [
+                "ce0ed9a81f35c831"
+            ]
+        ]
+    },
+    {
+        "id": "0d99420bdd3b4877",
+        "type": "mqtt out",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "topic": "skripsi/iot_greenhouse/scn/flagPlant",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "4e3c698d6efaab10",
+        "x": 1070,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "8b519bf806a30574",
+        "type": "mqtt out",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "topic": "skripsi/iot_greenhouse/scn/flagPlant",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "4e3c698d6efaab10",
+        "x": 1250,
+        "y": 1580,
+        "wires": []
+    },
+    {
+        "id": "7bb8eb872678b0b6",
+        "type": "ui_text",
+        "z": "b086de2ebf79f95d",
+        "group": "8352ff6457d9fdd1",
+        "order": 7,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Water Temp",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 530,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "437062185636a428",
+        "type": "ui_chart",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "group": "8352ff6457d9fdd1",
+        "order": 2,
+        "width": 6,
+        "height": 4,
+        "label": "Water Temp",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 530,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8cb14663d1bccc09",
+        "type": "ui_button",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "group": "8352ff6457d9fdd1",
+        "order": 12,
+        "width": 12,
+        "height": 1,
+        "passthru": false,
+        "label": "Back to main menu",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-arrow-left",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "Main",
+        "topicType": "str",
+        "x": 730,
+        "y": 820,
+        "wires": [
+            [
+                "dc8b42b5885faf67"
+            ]
+        ]
+    },
+    {
+        "id": "52821db026e52f1b",
+        "type": "ui_ui_control",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "events": "all",
+        "x": 1100,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d5a7b588ed33a0ad",
+        "type": "ui_text",
+        "z": "b086de2ebf79f95d",
+        "group": "8352ff6457d9fdd1",
+        "order": 6,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "pH",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 510,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "ae7a16534dfc87c8",
+        "type": "ui_text",
+        "z": "b086de2ebf79f95d",
+        "group": "8352ff6457d9fdd1",
+        "order": 8,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "EC",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 510,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "fce4068f548f682f",
+        "type": "ui_chart",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "group": "8352ff6457d9fdd1",
+        "order": 3,
+        "width": 6,
+        "height": 4,
+        "label": "EC",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 510,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dc5ea8952f4c9bc1",
+        "type": "ui_chart",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "group": "8352ff6457d9fdd1",
+        "order": 1,
+        "width": 6,
+        "height": 4,
+        "label": "pH",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 510,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dc8b42b5885faf67",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 24",
+        "func": "msg.payload = msg.topic;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 820,
+        "wires": [
+            [
+                "52821db026e52f1b"
+            ]
+        ]
+    },
+    {
+        "id": "89d4b9ae64aa90dd",
+        "type": "ui_text",
+        "z": "b086de2ebf79f95d",
+        "group": "8352ff6457d9fdd1",
+        "order": 5,
+        "width": 12,
+        "height": 1,
+        "name": "",
+        "label": "Kondisi Sekarang: ",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "className": "",
+        "x": 730,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "332518b63e1039eb",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "water_level",
+        "func": "const data = msg.payload;\nmsg.payload = data.water_level;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 740,
+        "wires": [
+            [
+                "8db6bd830d63d796",
+                "f16222c57589279d"
+            ]
+        ]
+    },
+    {
+        "id": "8db6bd830d63d796",
+        "type": "ui_text",
+        "z": "b086de2ebf79f95d",
+        "group": "8352ff6457d9fdd1",
+        "order": 9,
+        "width": 4,
+        "height": 1,
+        "name": "",
+        "label": "Water Level",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 530,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "f16222c57589279d",
+        "type": "ui_chart",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "group": "8352ff6457d9fdd1",
+        "order": 4,
+        "width": 6,
+        "height": 4,
+        "label": "Water Level",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 530,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fdb502b5a46a3624",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 36",
+        "func": "msg.payload = 1;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 1160,
+        "wires": [
+            [
+                "0d99420bdd3b4877"
+            ]
+        ]
+    },
+    {
+        "id": "0fd0e789312b650a",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 37",
+        "func": "msg.payload = 0;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 1600,
+        "wires": [
+            [
+                "8b519bf806a30574"
+            ]
+        ]
+    },
+    {
+        "id": "9f1ecfb8c0fba1c4",
+        "type": "ui_template",
+        "z": "b086de2ebf79f95d",
+        "group": "8352ff6457d9fdd1",
+        "name": "",
+        "order": 11,
+        "width": 0,
+        "height": 0,
+        "format": "<a href=\"https://dashboard.greenhouse-project.my.id/api/scn/csv/28\" download=\"data.csv\">Download All SCN Data</a>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 380,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c794dd76a76d5f54",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 38",
+        "func": "var data= msg.payload;\nlet dataFixed = {};\n\nfunction convertUTCDateToLocalDate(dateIn) {\n    const date = new Date(dateIn);\n\n    date.setHours(date.getHours() - 7);\n    date.setDate(date.getDate()+0);\n\n\n    // now you can get the string\n    var isodate = date.toISOString();\n    return isodate;\n}\n\nconst tanam = convertUTCDateToLocalDate(data.tanam);\nconst semai = convertUTCDateToLocalDate(data.semai);\n\nmsg.payload = {\n    tanggalTanam: tanam,\n    tanggalSemai: semai,\n};\n\n\n\n\nreturn msg;\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 1280,
+        "wires": [
+            [
+                "2d065fe848c34357",
+                "fdb502b5a46a3624",
+                "83cbf32ccb570d49"
+            ]
+        ]
+    },
+    {
+        "id": "2d065fe848c34357",
+        "type": "debug",
+        "z": "b086de2ebf79f95d",
+        "name": "debug 63",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1280,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "b5cd74453b916f21",
+        "type": "ui_template",
+        "z": "b086de2ebf79f95d",
+        "group": "a8fc93cddd5f661b",
+        "name": "",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "format": "<a href=\"https://dashboard.greenhouse-project.my.id/api/dataTanam/csv\" download=\"data.csv\">Download All Data Tanam</a>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 200,
+        "y": 1780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "81d6b191cfe6f82d",
+        "type": "http request",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://dashboard.greenhouse-project.my.id/api/lora/",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 330,
+        "y": 3400,
+        "wires": [
+            [
+                "90f5619d855c6a02"
+            ]
+        ]
+    },
+    {
+        "id": "90f5619d855c6a02",
+        "type": "debug",
+        "z": "b086de2ebf79f95d",
+        "name": "debug 64",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 3380,
+        "wires": []
+    },
+    {
+        "id": "303cb265bcc82427",
+        "type": "http request",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://dashboard.greenhouse-project.my.id/api/scn",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 110,
+        "y": 640,
+        "wires": [
+            [
+                "d69f955a47b6e0c9"
+            ]
+        ]
+    },
+    {
+        "id": "d8d1524339641731",
+        "type": "ui_switch",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "label": "Kontrol Pompa Air",
+        "tooltip": "",
+        "group": "",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "num",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "num",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 970,
+        "y": 680,
+        "wires": [
+            [
+                "4ca8d361689ad37a",
+                "8b3336a74f034fde"
+            ]
+        ]
+    },
+    {
+        "id": "4ca8d361689ad37a",
+        "type": "mqtt out",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "topic": "skripsi/iot_greenhouse/akt/pompa/trigger",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "4e3c698d6efaab10",
+        "x": 1400,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "7b7a84be54dc66f5",
+        "type": "ui_toast",
+        "z": "b086de2ebf79f95d",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 1530,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "2214b035ab941c5a",
+        "type": "mqtt in",
+        "z": "b086de2ebf79f95d",
+        "name": "",
+        "topic": "skripsi/iot_greenhouse/akt/pompa/feedback",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "4e3c698d6efaab10",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 940,
+        "y": 760,
+        "wires": [
+            [
+                "8b3336a74f034fde",
+                "d8d1524339641731"
+            ]
+        ]
+    },
+    {
+        "id": "8b3336a74f034fde",
+        "type": "function",
+        "z": "b086de2ebf79f95d",
+        "name": "function 39",
+        "func": "var data = msg.payload;\n\nif(data == 0){\n    msg.topic = \"Pompa\";\n    msg.payload = \"OFF\";\n    return msg;\n} else {\n    msg.topic = \"Pompa\";\n    msg.payload = \"ON\";\n    return msg;\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1310,
+        "y": 780,
+        "wires": [
+            [
+                "7b7a84be54dc66f5"
+            ]
+        ]
+    },
+    {
+        "id": "e90c13c1abb6501b",
+        "type": "ui_text",
+        "z": "b086de2ebf79f95d",
+        "group": "8352ff6457d9fdd1",
+        "order": 10,
+        "width": 2,
+        "height": 1,
+        "name": "",
+        "label": "Liter",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "className": "",
+        "x": 490,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "ebf515c6222c16f3",
+        "type": "ui_button",
+        "z": "b086de2ebf79f95d",
+        "g": "504f7172601f624c",
+        "name": "",
+        "group": "7a2f2e41cd4506d7",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Uji FLC",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "Uji FLC",
+        "topicType": "str",
+        "x": 140,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "262edd7d198abc95",
+        "type": "ui_spacer",
+        "z": "b086de2ebf79f95d",
+        "name": "spacer",
+        "group": "",
+        "order": 2,
+        "width": 12,
+        "height": 1
+    },
+    {
+        "id": "f8fafcc95ed05409",
+        "type": "ui_spacer",
+        "z": "b086de2ebf79f95d",
+        "name": "spacer",
+        "group": "",
+        "order": 3,
+        "width": 12,
+        "height": 1
+    },
+    {
+        "id": "97fbcbcc153a75b5",
+        "type": "ui_spacer",
+        "z": "b086de2ebf79f95d",
+        "name": "spacer",
+        "group": "",
+        "order": 4,
+        "width": 12,
+        "height": 1
+    },
+    {
+        "id": "8c142d11dc67c57b",
+        "type": "ui_spacer",
+        "z": "b086de2ebf79f95d",
+        "name": "spacer",
+        "group": "",
+        "order": 5,
+        "width": 12,
+        "height": 1
+    },
+    {
+        "id": "1190308ccd4214b9",
+        "type": "ui_spacer",
+        "z": "b086de2ebf79f95d",
+        "name": "spacer",
+        "group": "",
+        "order": 6,
+        "width": 12,
+        "height": 1
+    },
+    {
+        "id": "4afa35b2b78e0762",
+        "type": "ui_spacer",
+        "z": "b086de2ebf79f95d",
+        "name": "spacer",
+        "group": "",
+        "order": 7,
+        "width": 12,
+        "height": 1
+    },
+    {
+        "id": "232ca73b7bb59fa2",
+        "type": "ui_spacer",
+        "z": "b086de2ebf79f95d",
+        "name": "spacer",
+        "group": "",
+        "order": 8,
+        "width": 12,
+        "height": 1
+    },
+    {
+        "id": "8dbff224a1f4b672",
+        "type": "ui_spacer",
+        "z": "b086de2ebf79f95d",
+        "name": "spacer",
+        "group": "",
+        "order": 9,
+        "width": 12,
+        "height": 1
+    },
+    {
+        "id": "c6cd57718eeadddf",
+        "type": "ui_spacer",
+        "z": "b086de2ebf79f95d",
+        "name": "spacer",
+        "group": "8293a78a191dd3d7",
+        "order": 2,
+        "width": 8,
+        "height": 1
+    },
+    {
+        "id": "4905711bbc3ad00b",
+        "type": "ui_spacer",
+        "z": "b086de2ebf79f95d",
+        "name": "spacer",
+        "group": "8293a78a191dd3d7",
+        "order": 3,
+        "width": 8,
+        "height": 1
+    },
+    {
+        "id": "f3d88f4da949b955",
+        "type": "ui_spacer",
+        "z": "b086de2ebf79f95d",
+        "name": "spacer",
+        "group": "8293a78a191dd3d7",
+        "order": 4,
+        "width": 8,
+        "height": 1
+    },
+    {
+        "id": "4e3c698d6efaab10",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "8293a78a191dd3d7",
+        "type": "ui_group",
+        "name": "Display Param",
+        "tab": "8512ab359f8b1217",
+        "order": 3,
+        "disp": true,
+        "width": 8,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "dd116dcad9e28d42",
+        "type": "ui_group",
+        "name": "Edit Param",
+        "tab": "8512ab359f8b1217",
+        "order": 4,
+        "disp": true,
+        "width": 8,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "9e7976ed51696c01",
+        "type": "ui_group",
+        "name": "Lora Data",
+        "tab": "ae51129a3bd0ca86",
+        "order": 1,
+        "disp": true,
+        "width": "25",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "7a2f2e41cd4506d7",
+        "type": "ui_group",
+        "name": "Display",
+        "tab": "5019cda4885a6303",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "a8fc93cddd5f661b",
+        "type": "ui_group",
+        "name": "Setting",
+        "tab": "6f3c691170ec8da2",
+        "order": 2,
+        "disp": true,
+        "width": 10,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "1404f2eef868bd1c",
+        "type": "ui_group",
+        "name": "Progress",
+        "tab": "6f3c691170ec8da2",
+        "order": 1,
+        "disp": true,
+        "width": 8,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "8352ff6457d9fdd1",
+        "type": "ui_group",
+        "name": "Greenhouse A",
+        "tab": "8512ab359f8b1217",
+        "order": 2,
+        "disp": true,
+        "width": 12,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "8512ab359f8b1217",
+        "type": "ui_tab",
+        "name": "Greenhouse",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "ae51129a3bd0ca86",
+        "type": "ui_tab",
+        "name": "Lora",
+        "icon": "dashboard",
+        "order": 5,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "5019cda4885a6303",
+        "type": "ui_tab",
+        "name": "Main",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "6f3c691170ec8da2",
+        "type": "ui_tab",
+        "name": "Setup Tanam",
+        "icon": "dashboard",
+        "order": 5,
+        "disabled": false,
+        "hidden": false
+    }
+]
